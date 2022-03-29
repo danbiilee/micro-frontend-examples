@@ -1,0 +1,9 @@
+{
+  "license": "ISC",
+  "scripts": {
+    "start": "concurrently \"cd app1; yarn dev \" \"cd host; yarn dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

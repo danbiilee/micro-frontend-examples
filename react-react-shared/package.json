@@ -1,0 +1,16 @@
+{
+  "name": "micro-frontend-examples",
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "host",
+    "remotes/*",
+    "shared"
+  ],
+  "scripts": {
+    "start": "concurrently \"cd shared; yarn dev \" \"cd remotes/app1; yarn dev \" \"cd remotes/app2; yarn dev \" \"cd host; yarn dev\" "
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

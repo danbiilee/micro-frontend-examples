@@ -1,0 +1,11 @@
+{
+  "license": "ISC",
+  "scripts": {
+    "start": "concurrently \"cd app1; yarn dev \" \"cd app2; yarn dev \" \"cd host; yarn dev\" "
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "terser-webpack-plugin": "^5.3.1"
+  }
+}

@@ -1,6 +1,10 @@
 # Next(Host) - React(Remote)
 
-## 구조
+## Getting Started
+
+```bash
+yarn && cd host && yarn && cd ../app1 && yarn && cd ../app2 && yarn && cd ../ && yarn start
+```
 
 - Host
   - `./host`: localhost:3000
@@ -8,11 +12,6 @@
   - `./app1`: localhost:3001
   - `./app2`: localhost:3002
 
-## Install & Start
-
-```bash
-cd host && yarn && cd ../app1 && yarn && cd ../app1 && yarn && cd ../ && yarn start
-```
 
 ## HMR
 

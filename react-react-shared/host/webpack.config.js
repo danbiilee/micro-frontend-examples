@@ -27,6 +27,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: isDevelopment ? '[name].js' : '[name].[contenthash:8].js',
     assetModuleFilename: 'assets/[contenthash:8][ext][query]',
     clean: true,
   },

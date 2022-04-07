@@ -81,10 +81,6 @@ const config = {
     alias: {},
   },
   plugins: [
-    new MFLiveReloadPlugin({
-      port,
-      container: mfName,
-    }),
     new ModuleFederationPlugin({
       name: mfName,
       remotes: {
@@ -108,6 +104,11 @@ const config = {
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[contenthash:8].css',
     }),
+    isDevelopment &&
+      new MFLiveReloadPlugin({
+        port,
+        container: mfName,
+      }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
     !isDevelopment && new webpack.LoaderOptionsPlugin({ minimize: true }),
     !isDevelopment &&

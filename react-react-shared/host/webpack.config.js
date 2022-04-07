@@ -127,7 +127,6 @@ const config = {
           },
         },
         extractComments: false,
-        exclude: /config\//,
       }),
       new CssMinimizerPlugin({
         minimizerOptions: {

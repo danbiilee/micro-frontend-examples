@@ -8,9 +8,12 @@
     "shared"
   ],
   "scripts": {
-    "start": "concurrently \"cd shared; yarn dev \" \"cd remotes/app1; yarn dev \" \"cd remotes/app2; yarn dev \" \"cd host; yarn dev\" "
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean --yes && rm -rf ./node_modules",
+    "start": "lerna run start --parallel",
+    "build": "lerna run build"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "lerna": "^4.0.0"
   }
 }

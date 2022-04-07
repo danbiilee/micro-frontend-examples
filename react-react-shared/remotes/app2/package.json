@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "ISC",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve",
+    "start": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack"
   },
   "dependencies": {

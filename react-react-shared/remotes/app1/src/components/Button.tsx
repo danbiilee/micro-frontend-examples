@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SharedButton from '@managent/shared/src/components/Button';
+import { Button as SharedButton } from '@managent/shared';
 
 const Button = () => {
   const [count, setCount] = useState(0);

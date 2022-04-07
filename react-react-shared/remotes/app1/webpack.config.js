@@ -24,6 +24,9 @@ const config = {
     static: { directory: path.join(__dirname, 'public') },
     historyApiFallback: true,
     compress: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

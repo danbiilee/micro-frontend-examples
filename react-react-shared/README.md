@@ -3,7 +3,7 @@
 ## Getting Started
 
 ```bash
-yarn install && yarn start
+yarn bootstrap && yarn start
 ```
 
 - Host
@@ -11,11 +11,9 @@ yarn install && yarn start
 - Remote
   - `./remotes/app1`: localhost:3001
   - `./remotes/app2`: localhost:3002
-- Shared
-  - `./shared`: localhost:3003
 
 ## Features
 
 - live reloading: `@module-federation/fmr` 사용
-- shared 패키지
-  - Yarn Workspace
+- 모노레포 적용: Yarn Workspace + Lerna
+- Remote app1에서 shared 패키지 사용

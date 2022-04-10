@@ -3,6 +3,7 @@
 ## Getting Started
 
 ```bash
+npm i -g lerna
 yarn bootstrap && yarn start
 ```
 
@@ -16,4 +17,4 @@ yarn bootstrap && yarn start
 
 - live reloading: `@module-federation/fmr` 사용
 - 모노레포 적용: Yarn Workspace + Lerna
-- Remote app1에서 shared 패키지 사용
+- shared 패키지: Remote app1에서 사용

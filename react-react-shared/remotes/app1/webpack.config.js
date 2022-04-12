@@ -114,9 +114,6 @@ const config = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: isDevelopment ? 'development' : 'production',
-    }),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[contenthash:8].css',
     }),

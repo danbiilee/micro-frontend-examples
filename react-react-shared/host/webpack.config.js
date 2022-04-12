@@ -45,8 +45,6 @@ const mfConfig = {
   },
 };
 
-console.log(mfConfig);
-
 // Webpack's Configuration
 const config = {
   entry: './src/index.tsx',
@@ -120,9 +118,11 @@ const config = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: isDevelopment ? 'development' : 'production',
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'MANAGENT_MF_NAME_APP1',
+      'MANAGENT_MF_NAME_APP2',
+    ]),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[contenthash:8].css',
     }),

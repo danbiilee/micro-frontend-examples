@@ -47,6 +47,13 @@ const mfConfig = {
 
 // Webpack's Configuration
 const config = {
+  // entry: {
+  //   app: {
+  //     import: './src/index.tsx',
+  //     dependOn: 'react-vendors',
+  //   },
+  //   'react-vendors': ['react', 'react-dom'],
+  // },
   entry: './src/index.tsx',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-cheap-module-source-map' : false,

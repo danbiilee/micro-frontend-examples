@@ -18,3 +18,4 @@ yarn bootstrap && yarn start
 - live reloading: `@module-federation/fmr` 사용
 - 모노레포 적용: Yarn Workspace + Lerna
 - shared 패키지: Remote app1에서 사용
+- 테스트 배포: https://micro-host.netlify.app/

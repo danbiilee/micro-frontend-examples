@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,16 +11,47 @@ const { ModuleFederationPlugin } = webpack.container;
 const { MFLiveReloadPlugin } = require('@module-federation/fmr');
 const deps = require('./package.json').dependencies;
 
-const port = 3000;
-const mfName = 'host';
-const isDevelopment = process.env['NODE_ENV'] !== 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
+// Loads Environment Variables
+if (isDevelopment) {
+  dotenv.config({ path: '../.env.development' });
+} else {
+  dotenv.config({ path: '../.env.production' });
+}
+
+const {
+  MANAGENT_MF_PORT_HOST: port,
+  MANAGENT_MF_NAME_HOST: hostName,
+  MANAGENT_MF_NAME_APP1: app1Name,
+  MANAGENT_MF_URL_APP1: app1URL,
+  MANAGENT_MF_NAME_APP2: app2Name,
+  MANAGENT_MF_URL_APP2: app2URL,
+} = process.env;
+
+// Module Federation's Configuration
+const mfConfig = {
+  name: hostName,
+  remotes: {
+    [app1Name]: `${app1Name}@${app1URL}/${app1Name}RemoteEntry.js`,
+    [app2Name]: `${app2Name}@${app2URL}/${app2Name}RemoteEntry.js`,
+  },
+  shared: {
+    react: { singleton: true, requiredVersion: deps['react'] },
+    'react-dom': {
+      singleton: true,
+      requiredVersion: deps['react-dom'],
+    },
+  },
+};
+
+// Webpack's Configuration
 const config = {
   entry: './src/index.tsx',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-cheap-module-source-map' : false,
   devServer: {
-    port,
+    port: parseInt(port),
     hot: true,
     static: { directory: path.join(__dirname, 'public') },
     historyApiFallback: true,
@@ -27,6 +59,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: isDevelopment ? '[name].js' : '[name].[contenthash:8].js',
     assetModuleFilename: 'assets/[contenthash:8][ext][query]',
     clean: true,
   },
@@ -81,33 +114,23 @@ const config = {
     alias: {},
   },
   plugins: [
-    new MFLiveReloadPlugin({
-      port,
-      container: mfName,
-    }),
-    new ModuleFederationPlugin({
-      name: mfName,
-      remotes: {
-        app1: 'app1@http://localhost:3001/app1RemoteEntry.js',
-        app2: 'app2@http://localhost:3002/app2RemoteEntry.js',
-      },
-      shared: {
-        react: { singleton: true, requiredVersion: deps['react'] },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-      },
-    }),
+    new ModuleFederationPlugin(mfConfig),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: isDevelopment ? 'development' : 'production',
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'MANAGENT_MF_NAME_APP1',
+      'MANAGENT_MF_NAME_APP2',
+    ]),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[contenthash:8].css',
     }),
+    isDevelopment &&
+      new MFLiveReloadPlugin({
+        port: parseInt(port),
+        container: hostName,
+      }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
     !isDevelopment && new webpack.LoaderOptionsPlugin({ minimize: true }),
     !isDevelopment &&

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,16 +11,41 @@ const { ModuleFederationPlugin } = webpack.container;
 const { MFLiveReloadPlugin } = require('@module-federation/fmr');
 const deps = require('./package.json').dependencies;
 
-const port = 3001;
-const mfName = 'app1';
-const isDevelopment = process.env['NODE_ENV'] !== 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
+// Loads Environment Variables
+if (isDevelopment) {
+  dotenv.config({ path: '../../.env.development' });
+} else {
+  dotenv.config({ path: '../../.env.production' });
+}
+
+const { MANAGENT_MF_PORT_APP1: port, MANAGENT_MF_NAME_APP1: app1Name } =
+  process.env;
+
+// Module Federation's Configuration
+const mfConfig = {
+  name: app1Name,
+  filename: `${app1Name}RemoteEntry.js`,
+  exposes: {
+    './Button': './src/components/Button',
+  },
+  shared: {
+    react: { singleton: true, requiredVersion: deps['react'] },
+    'react-dom': {
+      singleton: true,
+      requiredVersion: deps['react-dom'],
+    },
+  },
+};
+
+// Webpack's Configuration
 const config = {
   entry: './src/index.tsx',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-cheap-module-source-map' : false,
   devServer: {
-    port,
+    port: parseInt(port),
     hot: true,
     static: { directory: path.join(__dirname, 'public') },
     historyApiFallback: true,
@@ -84,20 +110,7 @@ const config = {
     alias: {},
   },
   plugins: [
-    new ModuleFederationPlugin({
-      name: mfName,
-      filename: `${mfName}RemoteEntry.js`,
-      exposes: {
-        './Button': './src/components/Button',
-      },
-      shared: {
-        react: { singleton: true, requiredVersion: deps['react'] },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-      },
-    }),
+    new ModuleFederationPlugin(mfConfig),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
@@ -109,8 +122,8 @@ const config = {
     }),
     isDevelopment &&
       new MFLiveReloadPlugin({
-        port,
-        container: mfName,
+        port: parseInt(port),
+        container: app1Name,
       }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
     !isDevelopment && new webpack.LoaderOptionsPlugin({ minimize: true }),

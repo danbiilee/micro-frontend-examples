@@ -26,6 +26,7 @@ const mfConfig = {
     './Button': './src/components/Button2',
   },
   shared: {
+    ...deps,
     react: { singleton: true, requiredVersion: deps['react'] },
     'react-dom': {
       singleton: true,

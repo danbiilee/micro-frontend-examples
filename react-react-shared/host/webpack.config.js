@@ -33,6 +33,7 @@ const mfConfig = {
     [app2Name]: `${app2Name}@${app2URL}/${app2Name}RemoteEntry.js`,
   },
   shared: {
+    ...deps,
     react: { singleton: true, requiredVersion: deps['react'] },
     'react-dom': {
       singleton: true,

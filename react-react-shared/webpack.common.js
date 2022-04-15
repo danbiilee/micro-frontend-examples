@@ -58,11 +58,10 @@ const config = port => {
         {
           test: /\.(p|s)?css$/,
           use: [
-            MiniCssExtractPlugin.loader,
-            'style-loader',
+            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
             'css-loader',
             'sass-loader',
-          ],
+          ].filter(Boolean),
         },
         {
           test: /\.(svg|png|jpe?g|gif|ico)$/i,
@@ -82,10 +81,11 @@ const config = port => {
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
-      new MiniCssExtractPlugin({
-        filename: isDevelopment ? '[name].css' : '[name].[contenthash:8].css',
-      }),
       isDevelopment && new ReactRefreshWebpackPlugin(),
+      !isDevelopment &&
+      new MiniCssExtractPlugin({
+          filename: '[name].[contenthash:8].css',
+      }),
       !isDevelopment && new webpack.LoaderOptionsPlugin({ minimize: true }),
       !isDevelopment &&
         new BundleAnalyzerPlugin({

@@ -35,7 +35,7 @@ const mfConfig = {
 };
 
 // Webpack's Configuration
-const config = merge(common(port), {
+const config = merge(common(__dirname, port), {
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*',

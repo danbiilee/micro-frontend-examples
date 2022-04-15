@@ -10,7 +10,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Webpack's Configuration
-const config = port => {
+const config = (dirname, port) => {
   return {
     entry: './src/index.tsx',
     mode: isDevelopment ? 'development' : 'production',
@@ -18,12 +18,12 @@ const config = port => {
     devServer: {
       port: parseInt(port),
       hot: true,
-      static: { directory: path.join(__dirname, 'public') },
+      static: { directory: path.join(dirname, 'public') },
       historyApiFallback: true,
       compress: true,
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(dirname, 'dist'),
       filename: isDevelopment ? '[name].js' : '[name].[contenthash:8].js',
       assetModuleFilename: 'assets/[contenthash:8][ext][query]',
       clean: true,
@@ -83,9 +83,9 @@ const config = port => {
       }),
       isDevelopment && new ReactRefreshWebpackPlugin(),
       !isDevelopment &&
-      new MiniCssExtractPlugin({
+        new MiniCssExtractPlugin({
           filename: '[name].[contenthash:8].css',
-      }),
+        }),
       !isDevelopment && new webpack.LoaderOptionsPlugin({ minimize: true }),
       !isDevelopment &&
         new BundleAnalyzerPlugin({

@@ -41,7 +41,7 @@ const mfConfig = {
 };
 
 // Webpack's Configuration
-const config = merge(common(port), {
+const config = merge(common(__dirname, port), {
   plugins: [
     new webpack.EnvironmentPlugin([
       'NODE_ENV',

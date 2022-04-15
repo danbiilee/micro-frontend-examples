@@ -3,6 +3,9 @@
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "typeRoots": ["./types"],
+    "paths": {
+      "@images/*": ["src/assets/images/*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

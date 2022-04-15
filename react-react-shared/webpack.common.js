@@ -75,7 +75,6 @@ const config = (dirname, port) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.json'],
-      alias: {},
     },
     plugins: [
       new HtmlWebpackPlugin({

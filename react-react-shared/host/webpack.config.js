@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 const { merge } = require('webpack-merge');
@@ -42,6 +43,11 @@ const mfConfig = {
 
 // Webpack's Configuration
 const config = merge(common(__dirname, port), {
+  resolve: {
+    alias: {
+      '@images': path.resolve(__dirname, 'src/assets/images'),
+    },
+  },
   plugins: [
     new webpack.EnvironmentPlugin([
       'NODE_ENV',

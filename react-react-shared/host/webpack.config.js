@@ -19,6 +19,7 @@ if (isDevelopment) {
 const {
   MANAGENT_MF_PORT_HOST: port,
   MANAGENT_MF_NAME_HOST: hostName,
+  MANAGENT_MF_URL_HOST: hostURL,
   MANAGENT_MF_NAME_APP1: app1Name,
   MANAGENT_MF_URL_APP1: app1URL,
   MANAGENT_MF_NAME_APP2: app2Name,
@@ -50,6 +51,9 @@ const config = merge(common(__dirname, port), {
     },
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.PUBLIC_URL': JSON.stringify(hostURL),
+    }),
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
       'MANAGENT_MF_NAME_APP1',

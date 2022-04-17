@@ -3,5 +3,7 @@ declare namespace NodeJS {
     readonly NODE_ENV: 'development' | 'production';
     readonly MANAGENT_MF_NAME_APP1: string;
     readonly MANAGENT_MF_NAME_APP2: string;
+    readonly MANAGENT_MF_URL_APP1: string;
+    readonly MANAGENT_MF_URL_APP2: string;
   }
 }

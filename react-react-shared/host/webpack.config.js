@@ -15,22 +15,12 @@ if (isDevelopment) {
   dotenv.config({ path: '../.env.production' });
 }
 
-const {
-  MANAGENT_MF_PORT_HOST: port,
-  MANAGENT_MF_NAME_HOST: hostName,
-  MANAGENT_MF_NAME_APP1: app1Name,
-  MANAGENT_MF_URL_APP1: app1URL,
-  MANAGENT_MF_NAME_APP2: app2Name,
-  MANAGENT_MF_URL_APP2: app2URL,
-} = process.env;
+const { MANAGENT_MF_PORT_HOST: port, MANAGENT_MF_NAME_HOST: hostName } =
+  process.env;
 
 // Module Federation's Configuration
 const mfConfig = {
   name: hostName,
-  remotes: {
-    [app1Name]: `${app1Name}@${app1URL}/${app1Name}RemoteEntry.js`,
-    [app2Name]: `${app2Name}@${app2URL}/${app2Name}RemoteEntry.js`,
-  },
   shared: {
     react: { singleton: true, requiredVersion: deps['react'] },
     'react-dom': {
@@ -47,6 +37,8 @@ const config = merge(common(port), {
       'NODE_ENV',
       'MANAGENT_MF_NAME_APP1',
       'MANAGENT_MF_NAME_APP2',
+      'MANAGENT_MF_URL_APP1',
+      'MANAGENT_MF_URL_APP2',
     ]),
     new ModuleFederationPlugin(mfConfig),
     isDevelopment &&

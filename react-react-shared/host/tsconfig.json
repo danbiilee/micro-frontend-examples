@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": ["./types"],
+    "typeRoots": ["/types"],
+    "baseUrl": ".",
     "paths": {
       "@images/*": ["src/assets/images/*"]
     },
